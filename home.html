@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LibraVault — Intelligent Library Management</title>
+  <meta name="description" content="Manage your library with elegance. Premium SaaS for tracking books, members, and real-time analytics." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Initialize Theme -->
+  <script>(function(){ document.documentElement.setAttribute('data-theme', localStorage.getItem('lms_theme')||'dark'); })()</script>
+  
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="home.css" />
+  
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
+</head>
+<body>
+  
+  <!-- Navbar -->
+  <nav class="landing-nav" id="landing-nav">
+    <a href="#" class="landing-logo">
+      <img src="assets/logo.jpg" alt="LibraVault Logo" style="height: 32px; width: auto; border-radius: 4px;" />
+      LibraVault
+    </a>
+    <div class="landing-nav-links">
+      <a href="#features">Features</a>
+      <button class="btn btn-secondary" onclick="Theme.toggle()" style="padding: 0.5rem">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </button>
+      <button class="btn btn-primary" onclick="openLoginModal()">Sign In</button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <!-- Animated Waves Background -->
+    <div class="bg-wave-container">
+      <div class="bg-wave"></div>
+      <div class="bg-wave bg-wave-2"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-pill">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+        LibraVault v2.0 is now live
+      </div>
+      <h1 class="hero-title">Manage your library with elegance.</h1>
+      <p class="hero-sub">The intelligent, high-performance platform for modern libraries. Track books, manage members, and gain real-time insights in one beautiful place.</p>
+      <div class="hero-actions">
+        <button onclick="openLoginModal()" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1.1rem;">Get Started Free</button>
+        <a href="#features" class="btn btn-secondary" style="padding: 1rem 2rem; font-size: 1.1rem;">Explore Features</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="floating-card fc-1">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--brand-accent)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+        <div>
+          <div style="font-size: 0.8rem; color: var(--text-muted)">Real-time Sync</div>
+          <div style="font-weight: 600;">Active</div>
+        </div>
+      </div>
+      <div class="floating-card fc-2">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        <div>
+          <div style="font-size: 0.8rem; color: var(--text-muted)">Database Health</div>
+          <div style="font-weight: 600;">100% Operational</div>
+        </div>
+      </div>
+      <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=1200&q=80" alt="Beautiful Library" class="hero-image" style="object-fit: cover; height: 450px;" />
+    </div>
+  </section>
+
+  <!-- Feature Section -->
+  <section id="features" class="feature-section">
+    <div class="section-header reveal">
+      <h2 class="section-title">Enterprise-grade capabilities.</h2>
+      <p class="section-sub">Everything you need to run a world-class library, packed into an incredibly fast, premium interface.</p>
+    </div>
+
+    <div class="feature-grid reveal">
+      <div class="feature-image-wrapper">
+        <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=800&q=80" alt="Books stacked" class="feature-image" style="object-fit: cover; height: 500px;" />
+      </div>
+      <div class="feature-text">
+        <h3>Real-time Analytics</h3>
+        <p>Our Firebase-powered backend ensures that every borrow, return, and new member registration is synchronized across all admin dashboards instantly. No refreshing required.</p>
+        <ul class="feature-list">
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Live dashboard metrics
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Instant inventory updates
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Member activity tracking
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="feature-section" style="text-align: center; border-top: 1px solid var(--border);">
+    <div class="reveal">
+      <h2 class="section-title">Ready to modernize your library?</h2>
+      <p class="section-sub" style="margin-bottom: 2rem;">Join hundreds of organizations using LibraVault.</p>
+      <button onclick="openLoginModal()" class="btn btn-primary" style="padding: 1rem 3rem; font-size: 1.1rem;">Create an Account</button>
+    </div>
+  </section>
+
+  <script src="theme.js"></script>
+  <script>
+    // Intersection Observer for Scroll Animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+    // Nav Scroll Effect
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('landing-nav');
+      if (window.scrollY > 50) {
+        nav.style.padding = '1rem 4rem';
+        nav.style.boxShadow = 'var(--shadow-sm)';
+      } else {
+        nav.style.padding = '1.5rem 4rem';
+        nav.style.boxShadow = 'none';
+      }
+    });
+  </script>
+  <!-- Login Modal -->
+  <div class="login-modal-overlay" id="login-modal" onclick="closeLoginModal(event)">
+    <div class="login-modal-container">
+      <div class="lm-close" onclick="closeLoginModal(event, true)">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </div>
+      <div class="lm-left"></div>
+      <div class="lm-right">
+        <h2 id="form-heading">Welcome back!</h2>
+        <p id="form-subheading">Sign in to continue to your dashboard.</p>
+
+        <!-- Tab Pills -->
+        <div class="auth-tabs" style="display:flex;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-full);padding:0.25rem;margin-bottom:2rem;position:relative;">
+          <button class="auth-tab active" id="tab-login" onclick="switchTab('login')" style="flex:1;background:transparent;border:none;color:var(--text-secondary);font-weight:600;padding:0.75rem;border-radius:var(--radius-full);cursor:pointer;position:relative;z-index:2;transition:var(--transition-fast);">Sign In</button>
+          <button class="auth-tab" id="tab-signup" onclick="switchTab('signup')" style="flex:1;background:transparent;border:none;color:var(--text-secondary);font-weight:600;padding:0.75rem;border-radius:var(--radius-full);cursor:pointer;position:relative;z-index:2;transition:var(--transition-fast);">Create Account</button>
+        </div>
+
+        <!-- Error / Success Banner -->
+        <div class="auth-banner" id="auth-banner" style="display:none;background:var(--red-bg);color:var(--red);padding:1rem;border-radius:var(--radius-sm);margin-bottom:1.5rem;font-size:0.9rem;border:1px solid rgba(239, 68, 68, 0.2);align-items:center;gap:0.5rem;"></div>
+
+        <!-- ===== LOGIN FORM ===== -->
+        <form id="login-form" class="auth-form active" novalidate>
+          <div class="form-group" style="margin-bottom:1.5rem;">
+            <label for="l-email" style="display:block;margin-bottom:0.5rem;font-size:0.9rem;font-weight:500;color:var(--text-secondary);">Email Address</label>
+            <div class="input-icon-wrap" style="position:relative;">
+              <svg class="input-pfx-icon" style="position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:var(--text-muted);width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <input type="email" id="l-email" class="form-control" style="width:100%;padding:0.75rem 1rem 0.75rem 2.75rem;background:var(--bg-base);border:1px solid var(--border);border-radius:var(--radius-md);color:var(--text-primary);font-family:inherit;font-size:1rem;" placeholder="you@example.com" autocomplete="email" />
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom:1.5rem;">
+            <label for="l-password" style="display:block;margin-bottom:0.5rem;font-size:0.9rem;font-weight:500;color:var(--text-secondary);">Password</label>
+            <div class="input-icon-wrap" style="position:relative;">
+              <svg class="input-pfx-icon" style="position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:var(--text-muted);width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <input type="password" id="l-password" class="form-control" style="width:100%;padding:0.75rem 2.75rem 0.75rem 2.75rem;background:var(--bg-base);border:1px solid var(--border);border-radius:var(--radius-md);color:var(--text-primary);font-family:inherit;font-size:1rem;" placeholder="••••••••" autocomplete="current-password" />
+              <button type="button" class="pw-toggle" onclick="togglePw('l-password', this)" style="position:absolute;right:1rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);cursor:pointer;padding:0;">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <div style="text-align:right;margin-top:0.5rem;">
+              <a href="#" onclick="forgotPassword(event)" style="font-size:0.85rem;color:var(--brand-primary);text-decoration:none;font-weight:500;">Forgot password?</a>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" id="l-submit" style="width:100%;padding:1rem;font-size:1rem;display:flex;justify-content:center;align-items:center;">
+            <span class="btn-label">Sign In</span>
+          </button>
+        </form>
+
+        <!-- ===== SIGNUP FORM ===== -->
+        <form id="signup-form" class="auth-form" novalidate style="display:none;">
+          <div class="form-group" style="margin-bottom:1.25rem;">
+            <label for="s-name" style="display:block;margin-bottom:0.5rem;font-size:0.9rem;font-weight:500;color:var(--text-secondary);">Full Name</label>
+            <div class="input-icon-wrap" style="position:relative;">
+              <svg class="input-pfx-icon" style="position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:var(--text-muted);width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <input type="text" id="s-name" class="form-control" style="width:100%;padding:0.75rem 1rem 0.75rem 2.75rem;background:var(--bg-base);border:1px solid var(--border);border-radius:var(--radius-md);color:var(--text-primary);font-family:inherit;font-size:1rem;" placeholder="Your full name" autocomplete="name" />
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom:1.25rem;">
+            <label for="s-email" style="display:block;margin-bottom:0.5rem;font-size:0.9rem;font-weight:500;color:var(--text-secondary);">Email Address</label>
+            <div class="input-icon-wrap" style="position:relative;">
+              <svg class="input-pfx-icon" style="position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:var(--text-muted);width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <input type="email" id="s-email" class="form-control" style="width:100%;padding:0.75rem 1rem 0.75rem 2.75rem;background:var(--bg-base);border:1px solid var(--border);border-radius:var(--radius-md);color:var(--text-primary);font-family:inherit;font-size:1rem;" placeholder="you@example.com" autocomplete="email" />
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom:1.25rem;">
+            <label for="s-password" style="display:block;margin-bottom:0.5rem;font-size:0.9rem;font-weight:500;color:var(--text-secondary);">Password</label>
+            <div class="input-icon-wrap" style="position:relative;">
+              <svg class="input-pfx-icon" style="position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:var(--text-muted);width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <input type="password" id="s-password" class="form-control" style="width:100%;padding:0.75rem 2.75rem 0.75rem 2.75rem;background:var(--bg-base);border:1px solid var(--border);border-radius:var(--radius-md);color:var(--text-primary);font-family:inherit;font-size:1rem;" placeholder="Strong password" />
+              <button type="button" class="pw-toggle" onclick="togglePw('s-password', this)" style="position:absolute;right:1rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);cursor:pointer;padding:0;">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom:1.25rem;">
+            <label for="s-confirm-password" style="display:block;margin-bottom:0.5rem;font-size:0.9rem;font-weight:500;color:var(--text-secondary);">Confirm Password</label>
+            <div class="input-icon-wrap" style="position:relative;">
+              <svg class="input-pfx-icon" style="position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:var(--text-muted);width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <input type="password" id="s-confirm-password" class="form-control" style="width:100%;padding:0.75rem 2.75rem 0.75rem 2.75rem;background:var(--bg-base);border:1px solid var(--border);border-radius:var(--radius-md);color:var(--text-primary);font-family:inherit;font-size:1rem;" placeholder="Confirm password" />
+              <button type="button" class="pw-toggle" onclick="togglePw('s-confirm-password', this)" style="position:absolute;right:1rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);cursor:pointer;padding:0;">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom:1.5rem;">
+            <label style="display:block;margin-bottom:0.5rem;font-size:0.9rem;font-weight:500;color:var(--text-secondary);">Select Your Role</label>
+            <div style="display:flex;gap:1rem;">
+              <div id="role-admin" onclick="selectRole('admin')" style="flex:1;padding:1rem;border:2px solid var(--brand-primary);border-radius:var(--radius-md);text-align:center;cursor:pointer;background:var(--bg-glass);">Admin</div>
+              <div id="role-member" onclick="selectRole('member')" style="flex:1;padding:1rem;border:2px solid transparent;border-radius:var(--radius-md);text-align:center;cursor:pointer;background:var(--bg-base);">Member</div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="s-submit" style="width:100%;padding:1rem;font-size:1rem;display:flex;justify-content:center;align-items:center;">
+            <span class="btn-label">Create Account</span>
+          </button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .auth-tab.active { background: var(--bg-surface) !important; color: var(--text-primary) !important; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+  </style>
+
+  <script>
+    'use strict';
+    
+    // Modal Open/Close
+    function openLoginModal() {
+      document.getElementById('login-modal').classList.add('active');
+    }
+    
+    function closeLoginModal(e, force = false) {
+      if (force || e.target.id === 'login-modal') {
+        document.getElementById('login-modal').classList.remove('active');
+      }
+    }
+
+    // Tabs
+    function switchTab(tab) {
+      const isLogin = tab === 'login';
+      document.getElementById('login-form').style.display = isLogin ? 'block' : 'none';
+      document.getElementById('signup-form').style.display = !isLogin ? 'block' : 'none';
+      document.getElementById('tab-login').classList.toggle('active', isLogin);
+      document.getElementById('tab-signup').classList.toggle('active', !isLogin);
+      document.getElementById('form-heading').textContent = isLogin ? 'Welcome back!' : 'Create Account';
+      document.getElementById('form-subheading').textContent = isLogin ? 'Sign in to continue to your dashboard.' : 'Join LibraVault and start exploring.';
+      hideBanner();
+    }
+
+    // Role
+    let selectedRole = 'admin';
+    function selectRole(r) {
+      selectedRole = r;
+      document.getElementById('role-admin').style.borderColor = r === 'admin' ? 'var(--brand-primary)' : 'transparent';
+      document.getElementById('role-admin').style.background = r === 'admin' ? 'var(--bg-glass)' : 'var(--bg-base)';
+      document.getElementById('role-member').style.borderColor = r === 'member' ? 'var(--brand-primary)' : 'transparent';
+      document.getElementById('role-member').style.background = r === 'member' ? 'var(--bg-glass)' : 'var(--bg-base)';
+    }
+
+    // Password Toggle
+    function togglePw(id, btn) {
+      const inp = document.getElementById(id);
+      const show = inp.type === 'password';
+      inp.type = show ? 'text' : 'password';
+    }
+
+    // Banner
+    function showBanner(msg, type = 'error') {
+      const b = document.getElementById('auth-banner');
+      b.textContent = msg;
+      b.style.display = 'flex';
+      b.style.background = type === 'success' ? 'var(--green-bg)' : 'var(--red-bg)';
+      b.style.color = type === 'success' ? 'var(--green)' : 'var(--red)';
+      b.style.borderColor = type === 'success' ? 'var(--green)' : 'var(--red)';
+    }
+    function hideBanner() { document.getElementById('auth-banner').style.display = 'none'; }
+
+    // Loading
+    function setLoading(formId, on) {
+      const btn = document.getElementById(formId === 'login' ? 'l-submit' : 's-submit');
+      btn.disabled = on;
+      btn.textContent = on ? (formId === 'login' ? 'Signing in...' : 'Creating...') : (formId === 'login' ? 'Sign In' : 'Create Account');
+    }
+
+    const AUTH_ERRORS = {
+      'auth/user-not-found': 'No account found with this email.',
+      'auth/wrong-password': 'Incorrect password.',
+      'auth/invalid-email': 'Please enter a valid email address.',
+      'auth/too-many-requests': 'Too many attempts. Try again later.',
+      'auth/invalid-credential': 'Invalid email or password.',
+      'auth/email-already-in-use': 'An account with this email already exists.',
+      'auth/weak-password': 'Password must be at least 6 characters.',
+    };
+
+    async function forgotPassword(e) {
+      e.preventDefault();
+      const email = document.getElementById('l-email').value.trim();
+      if (!email) {
+        showBanner('Please enter your email address first, then click Forgot Password.', 'error');
+        return;
+      }
+      try {
+        const snap = await db.collection('users').where('email', '==', email).get();
+        if (snap.empty) {
+          showBanner('No account found with this email address. Please check for typos!', 'error');
+          return;
+        }
+        await auth.sendPasswordResetEmail(email);
+        showBanner('Password reset email sent! Please check your SPAM or Junk folder if you do not see it.', 'success');
+      } catch (err) {
+        showBanner(AUTH_ERRORS[err.code] || err.message, 'error');
+      }
+    }
+
+    // Form Submit
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('l-email').value.trim();
+      const password = document.getElementById('l-password').value;
+      if (!email || !password) { showBanner('Please fill in all fields.'); return; }
+      setLoading('login', true); hideBanner();
+      try {
+        const cred = await auth.signInWithEmailAndPassword(email, password);
+        const snap = await db.collection('users').doc(cred.user.uid).get();
+        if (!snap.exists) throw new Error('User profile not found.');
+        const { role, theme } = snap.data();
+        if (theme) localStorage.setItem('lms_theme', theme);
+        window.location.href = role === 'admin' ? 'index.html' : 'member.html';
+      } catch (err) {
+        setLoading('login', false); showBanner(AUTH_ERRORS[err.code] || err.message);
+      }
+    });
+
+    document.getElementById('signup-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('s-name').value.trim();
+      const email = document.getElementById('s-email').value.trim();
+      const pw = document.getElementById('s-password').value;
+      const confirmPw = document.getElementById('s-confirm-password').value;
+
+      if (!name || !email || !pw || !confirmPw) { showBanner('Please fill all fields.'); return; }
+      if (pw !== confirmPw) { showBanner('Passwords do not match.'); return; }
+      
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailRegex.test(email)) {
+        showBanner('Please enter a valid, real-life working email address (e.g. @gmail.com).');
+        return;
+      }
+
+      const strongPwRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{7,}$/;
+      if (!strongPwRegex.test(pw)) { 
+        showBanner('Password must be >6 chars and contain a capital letter, a number, and a symbol.'); 
+        return; 
+      }
+      setLoading('signup', true); hideBanner();
+      try {
+        const cred = await auth.createUserWithEmailAndPassword(email, pw);
+        const uid = cred.user.uid;
+        await cred.user.updateProfile({ displayName: name });
+        const userDoc = { uid, name, email, role: selectedRole, theme: localStorage.getItem('lms_theme') || 'dark', joined: new Date().toISOString() };
+        await db.collection('users').doc(uid).set(userDoc);
+        if (selectedRole === 'member') {
+          await db.collection('members').doc(uid).set({
+            id: uid, name, email, phone: '', joined: new Date().toISOString().split('T')[0],
+            status: 'active', borrowed: 0, total: 0, userId: uid,
+          });
+        }
+        window.location.href = selectedRole === 'admin' ? 'index.html' : 'member.html';
+      } catch (err) {
+        setLoading('signup', false); showBanner(AUTH_ERRORS[err.code] || err.message);
+      }
+    });
+
+    auth.onAuthStateChanged(async (user) => {
+      if (!user) return;
+      try {
+        const snap = await db.collection('users').doc(user.uid).get();
+        if (snap.exists) { window.location.href = snap.data().role === 'admin' ? 'index.html' : 'member.html'; }
+      } catch (_) {}
+    });
+  </script>
+</body>
+</html>

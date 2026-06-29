@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LibraVault — Member Portal</title>
+  <meta name="description" content="Member dashboard for LibraVault." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <script>(function(){ document.documentElement.setAttribute('data-theme', localStorage.getItem('lms_theme')||'dark'); })()</script>
+  <link rel="stylesheet" href="style.css" />
+  
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">
+        <div class="logo-icon">
+          <img src="assets/logo.jpg" alt="LibraVault" style="height: 32px; width: auto; border-radius: 4px;" />
+        </div>
+        <div class="logo-text">
+          <span class="logo-name">LibraVault</span>
+          <span class="logo-sub">Member Portal</span>
+        </div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Menu</div>
+      <a href="#" class="nav-item active" data-page="discover" id="nav-discover">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <span>Discover Books</span>
+        <div class="nav-indicator"></div>
+      </a>
+      <a href="#" class="nav-item" data-page="my-books" id="nav-my-books">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        <span>My Borrowed Books</span>
+        <div class="nav-indicator"></div>
+      </a>
+      <a href="#" class="nav-item" data-page="profile" id="nav-profile">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>My Profile</span>
+        <div class="nav-indicator"></div>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content" id="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle sidebar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="page-title-area">
+          <h1 class="page-title" id="page-title">Discover Books</h1>
+          <p class="page-subtitle" id="page-subtitle">Find your next great read.</p>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="header-actions">
+          <button class="login-theme-btn" style="position:relative; top:0; right:0;" data-theme-toggle onclick="Theme.toggle(auth.currentUser?.uid)"></button>
+          <div class="user-profile-btn" onclick="signOut()">
+            <div class="up-avatar" id="nav-avatar">M</div>
+            <div class="up-info">
+              <span class="up-name" id="nav-user-name">Member Name</span>
+              <span class="up-role">Sign Out</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="content-area" id="content-area">
+      <!-- DISCOVER PAGE -->
+      <section class="page active" id="page-discover">
+        <div class="filter-bar" style="margin-bottom: 2rem; display: flex; justify-content: center;">
+          <div class="search-wrap" style="display:flex; align-items:center; background:var(--bg-card); border:1px solid var(--border); border-radius:2rem; padding:0.75rem 1.25rem; width:100%; max-width:600px; box-shadow:0 4px 6px rgba(0,0,0,0.05); transition:all 0.3s ease;">
+            <svg class="search-icon" style="width:20px; height:20px; color:var(--text-muted); min-width:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="discover-search" placeholder="Search books by title, author, or genre..." style="background:transparent; border:none; outline:none; width:100%; padding-left:0.75rem; color:var(--text-primary); font-size:1rem; font-family:inherit;" />
+          </div>
+        </div>
+        <div class="grid" id="discover-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+          <!-- Books populate here -->
+        </div>
+      </section>
+
+      <!-- MY BOOKS PAGE -->
+      <section class="page" id="page-my-books">
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Book</th>
+                <th>Borrow Date</th>
+                <th>Due Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="my-books-table">
+              <!-- Transactions populate here -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- PROFILE PAGE -->
+      <section class="page" id="page-profile">
+        <div class="card" style="max-width:500px">
+          <div class="card-header">
+            <h3>Update Profile</h3>
+          </div>
+          <form id="profile-form">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" id="prof-name" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="text" id="prof-phone" class="form-control" placeholder="e.g. 0777777777" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);" />
+            </div>
+            <button type="submit" class="btn btn-primary" id="prof-save">Save Changes</button>
+          </form>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="theme.js"></script>
+  <script src="member-app.js"></script>
+  <script>
+    // Auth Guard
+    auth.onAuthStateChanged(async (user) => {
+      if (!user) {
+        window.location.href = 'home.html';
+        return;
+      }
+      try {
+        const snap = await db.collection('users').doc(user.uid).get();
+        if (snap.exists) {
+          const data = snap.data();
+          if (data.role !== 'member') {
+            window.location.href = 'index.html';
+            return;
+          }
+          document.getElementById('nav-user-name').textContent = data.name;
+          document.getElementById('nav-avatar').textContent = data.name.charAt(0).toUpperCase();
+          Theme.init(user.uid);
+          MemberApp.init(user.uid, data);
+        }
+      } catch (err) {
+        console.error("Auth Guard Error:", err);
+      }
+    });
+
+    async function signOut() {
+      await auth.signOut();
+      window.location.href = 'home.html';
+    }
+  </script>
+</body>
+</html>
